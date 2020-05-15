@@ -1,0 +1,140 @@
+configure front (
+@begin
+---
+  - vars:
+       SSH_HADDOCK_KEYS:
+         ec3_file: haddock_id_rsa.pub
+
+    tasks:
+
+    - name: Install missing dependences in RedHat system
+      yum: pkg={{ item }} state=present
+      with_items:
+       - vim
+       - tcsh
+       - device-mapper-persistent-data
+       - lvm2
+      become: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: Make sure we have a 'wheel' group
+      group:
+        name: wheel
+        state: present
+
+    - name: Create the enmr user and add it to the wheel group
+      user: 
+        name: enmr 
+        groups: wheel 
+        append: yes 
+        state: present 
+        createhome: yes 
+        shell: /bin/bash
+
+    - name: SSH without password    
+      include_role:
+        name: grycap.ssh
+      vars:
+        ssh_type_of_node: front
+        ssh_user: enmr
+
+    - name: Deploy multiple SSH keys for the enmr user in the remote host
+      copy:
+        dest: /home/enmr/.ssh/authorized_keys
+        content: "{{SSH_HADDOCK_KEYS}}"
+        mode: 0600
+        owner: enmr
+
+    - name: Add Docker repo
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docer-ce.repo
+      become: yes
+
+    - name: Enable Docker Edge repo
+      ini_file:
+        dest: /etc/yum.repos.d/docer-ce.repo
+        section: 'docker-ce-edge'
+        option: enabled
+        value: 0
+      become: yes
+
+    - name: Enable Docker Test repo
+      ini_file:
+        dest: /etc/yum.repos.d/docer-ce.repo
+        section: 'docker-ce-test'
+        option: enabled
+        value: 0
+      become: yes
+
+    - name: Install Docker
+      package:
+        name: docker-ce
+        state: latest
+      become: yes
+
+    - name: Install docker-compose
+      remote_user: centos
+      get_url:
+        url : https://github.com/docker/compose/releases/download/1.23.2/docker-compose-Linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: 'u+x,g+x,a+x'
+      become: yes
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+      become: yes
+@end
+)
+
+configure wn (
+@begin
+---
+
+  - vars:
+       SSH_HADDOCK_KEYS:
+         ec3_file: haddock_id_rsa.pub
+
+    tasks:
+
+    - name: Install missing dependences in RedHat system
+      yum: pkg={{ item }} state=present
+      with_items:
+       - vim
+       - tcsh
+      become: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: Make sure we have a 'wheel' group
+      group:
+        name: wheel
+        state: present
+
+    - name: Create the enmr user and add it to the wheel group
+      user:
+        name: enmr
+        groups: wheel
+        append: yes
+        state: present
+        createhome: yes
+        shell: /bin/bash
+
+    - name: SSH without password
+      include_role:
+        name: grycap.ssh
+      vars:
+        ssh_type_of_node: wn
+        ssh_user: enmr
+
+    - name: Deploy multiple SSH keys for the enmr user in the remote host
+      copy:
+        dest: /home/enmr/.ssh/authorized_keys
+        content: "{{SSH_HADDOCK_KEYS}}"
+        mode: 0600
+        owner: enmr
+
+@end
+) 

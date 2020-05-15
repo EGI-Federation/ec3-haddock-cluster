@@ -1,0 +1,36 @@
+
+description centos7-CESGA (
+    kind = 'images' and
+    short = 'CentOS 7' and
+    content = 'Image for EGI CentOS 7'
+)
+
+network public (
+provider_id = 'public00' and
+outports contains '8080/tcp' and
+outports contains '443/tcp'
+)
+   
+system front (
+    cpu.arch = 'x86_64' and
+    cpu.count >= 2 and
+    memory.size >= 2048m and
+    #instance_type = 'http://schemas.openstack.org/template/resource#4c153ce3-a163-4668-baa7-2cbcb57e2dd8' and
+    disk.0.os.name = 'linux' and
+    # enmr.eu tenant
+    disk.0.image.url = 'ost://fedcloud-osservices.egi.cesga.es:5000/0be5f6d9-2914-48fd-b424-a41213812238' and
+    disk.0.os.credentials.username = 'centos'
+)
+
+system wn (
+    cpu.arch = 'x86_64' and
+    cpu.count >= 2 and
+    memory.size >= 2048m and
+    #memory.size >= 16384m and
+    ec3_max_instances = 5 and # maximum number of working nodes in the cluster
+    #instance_type = 'http://schemas.openstack.org/template/resource#57bf9ed0-cd71-4c7c-b886-2a5263d52678' and
+    disk.0.os.name = 'linux' and
+    # enmr.eu tenant
+    disk.0.image.url = 'ost://fedcloud-osservices.egi.cesga.es:5000/0be5f6d9-2914-48fd-b424-a41213812238' and
+    disk.0.os.credentials.username = 'centos'
+)
