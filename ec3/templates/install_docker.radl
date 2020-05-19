@@ -1,0 +1,63 @@
+description install_docker (
+    kind = 'component' and
+    short = 'Ansible recepit to install Docker in CentOS7.' and
+    content = 'Ansible recepit to install Docker in CentOS7.'
+)
+
+configure front (
+@begin
+
+    tasks:
+    - name: Install additional utils in RedHat system
+      yum: pkg={{ item }} state=present
+      with_items:
+       - yum-utils
+       - device-mapper-persistent-data
+       - lvm2
+      become: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: Add Docker repo
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docer-ce.repo
+      become: yes
+
+    - name: Install docker
+      package:
+        name: docker-ce
+        state: latest
+      become: yes
+
+    - name: Install docker-compose
+      remote_user: centos
+      get_url: 
+        url : https://github.com/docker/compose/releases/download/1.23.2/docker-compose-Linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: 'u+x,g+x'
+      become: yes
+
+    - name: Start the docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+      become: yes
+
+    - name: Create the docker daemon.json
+      copy:
+        dest: '/etc/docker/daemon.json'
+        content: |
+          { "mtu": 1442 }
+        mode: '0644'
+        owner: root
+      become: yes
+
+    - name: Restart the docker service
+      service:
+        name: docker
+        state: restarted
+
+@end
+)
+
