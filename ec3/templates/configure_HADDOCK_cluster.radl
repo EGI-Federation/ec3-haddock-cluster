@@ -37,71 +37,71 @@ configure front (
         ssh_type_of_node: front
         ssh_user: enmr
 
-    - name: Deploy multiple SSH keys for the enmr user in the remote host
-      copy:
-        dest: /home/enmr/.ssh/authorized_keys
-        content: "{{SSH_HADDOCK_KEYS}}"
-        mode: 0600
+    - name: Add multiple SSH keys for the enmr user in the remote host
+      lineinfile:
+        path: /home/enmr/.ssh/authorized_keys
+        line: "{{SSH_HADDOCK_KEYS}}"
+        mode: '0600'
         owner: enmr
 
-#    - name: Add Docker repo
-#      get_url:
-#        url: https://download.docker.com/linux/centos/docker-ce.repo
-#        dest: /etc/yum.repos.d/docer-ce.repo
-#      become: yes
+    - name: Add Docker repo
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docer-ce.repo
+      become: yes
 
-#    - name: Install docker
-#      package:
-#        name: docker-ce
-#        state: latest
-#      become: yes
+    - name: Install docker
+      package:
+        name: docker-ce
+        state: latest
+      become: yes
 
-#    - name: Install docker-compose
-#      remote_user: centos
-#      get_url:
-#        url : https://github.com/docker/compose/releases/download/1.23.2/docker-compose-Linux-x86_64
-#        dest: /usr/local/bin/docker-compose
-#        mode: 'u+x,g+x,a+x'
-#      become: yes
+    - name: Install docker-compose
+      remote_user: centos
+      get_url:
+        url : https://github.com/docker/compose/releases/download/1.23.2/docker-compose-Linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: 'u+x,g+x,a+x'
+      become: yes
 
-#    - name: Start the docker service
-#      service:
-#        name: docker
-#        state: started
-#        enabled: yes
-#      become: yes
+    - name: Start the docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+      become: yes
 
-#    - name: Create the docker daemon.json
-#      copy:
-#        dest: '/etc/docker/daemon.json'
-#        content: |
-#          { "mtu": 1442 }
-#        mode: '0644'
-#        owner: root
-#      become: yes
+    - name: Create the docker daemon.json
+      copy:
+        dest: '/etc/docker/daemon.json'
+        content: |
+          { "mtu": 1442 }
+        mode: '0644'
+        owner: root
+      become: yes
 
-#    - name: Restart the docker service
-#      service:
-#        name: docker
-#        state: restarted
-#      become: yes
+    - name: Restart the docker service
+      service:
+        name: docker
+        state: restarted
+      become: yes
 
-#    - name: configure system settings, file descriptors and number of threads
-#      pam_limits:
-#        domain: enmr
-#        limit_type: "{{item.limit_type}}"
-#        limit_item: "{{item.limit_item}}"
-#        value: "{{item.value}}"
-#      with_items:
-#        - { limit_type: '-', limit_item: 'nofile', value: 65536 }
-#        - { limit_type: '-', limit_item: 'nproc', value: 65536 }
-#        - { limit_type: 'soft', limit_item: 'memlock', value: unlimited }
-#        - { limit_type: 'hard', limit_item: 'memlock', value: unlimited }
-#      become: yes
+    - name: configure system settings, file descriptors and number of threads
+      pam_limits:
+        domain: enmr
+        limit_type: "{{item.limit_type}}"
+        limit_item: "{{item.limit_item}}"
+        value: "{{item.value}}"
+      with_items:
+        - { limit_type: '-', limit_item: 'nofile', value: 65536 }
+        - { limit_type: '-', limit_item: 'nproc', value: 65536 }
+        - { limit_type: 'soft', limit_item: 'memlock', value: unlimited }
+        - { limit_type: 'hard', limit_item: 'memlock', value: unlimited }
+      become: yes
 
-#    - name: reload settings from all system configuration files
-#      shell: sysctl --system
-#      become: yes
+    - name: reload settings from all system configuration files
+      shell: sysctl --system
+      become: yes
 
 @end
 )
@@ -145,13 +145,12 @@ configure wn (
         ssh_type_of_node: wn
         ssh_user: enmr
 
-    - name: Deploy multiple SSH keys for the enmr user in the remote host
-      copy:
-        dest: /home/enmr/.ssh/authorized_keys
-        content: "{{SSH_HADDOCK_KEYS}}"
-        mode: 0600
+    - name: Add multiple SSH keys for the enmr user in the remote host
+      lineinfile:
+        path: /home/enmr/.ssh/authorized_keys
+        line: "{{SSH_HADDOCK_KEYS}}"
+        mode: '0600'
         owner: enmr
 
 @end
 ) 
-
