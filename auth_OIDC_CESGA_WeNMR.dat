@@ -1,0 +1,1 @@
+id = cesgaostegi; type = OpenStack; host = https://fedcloud-osservices.egi.cesga.es:5000/v3/; username = egi.eu; tenant = openid; domain = enmr.eu; auth_version = 3.x_oidc_access_token; password = '<OIDC_TOKEN>'
