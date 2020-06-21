@@ -94,10 +94,10 @@ id = PROVIDER_ID; type = OpenStack; host = KEYSTONE_ENDPOINT; username = egi.eu;
 </pre>
 
 Where:
-** `id` is the id of the cloud provider (e.g.: cesgatoegi)
-** `host` is the public IP address of the cloud provider Keystone service (e.g.: https://fedcloud-osservices.egi.cesga.es:5000/v3)
-** `domain` is the project tenant in the cloud provider (e.g.: enmr.eu)
-** `password` is the access token
+* `id` is the id of the cloud provider (e.g.: cesgatoegi)
+* `host` is the public IP address of the cloud provider Keystone service (e.g.: https://fedcloud-osservices.egi.cesga.es:5000/v3)
+* `domain` is the project tenant in the cloud provider (e.g.: enmr.eu)
+* `password` is the access token
 
 ## To create the EC3 cluster
 
@@ -127,11 +127,11 @@ Front-end ready!
 ## Template used to configure the EC3 cluster for the HADDOCK portal
 
 The cluster will be configured with the following templates:
-** torque (default)
-** centos7-OIDC-CESGA_WeNMR (custom)
-** configure_HADDOCK_cluster (custom)
-** configure_nfs (custom)
-** refreshtoken (default)
+* torque (default)
+* centos7-OIDC-CESGA_WeNMR (custom)
+* configure_HADDOCK_cluster (custom)
+* configure_nfs (custom)
+* refreshtoken (default)
 
 User's templates are stored in: `$HOME/ec3/templates`
 
