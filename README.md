@@ -1,12 +1,12 @@
 # EC3-HADDOCK-cluster
 
-This repository contains the RADL files to configure an elastic cluster with EC3 for deploying the HADDOCK portal
+This repository contains the RADL files to configure an elastic cluster with EC3 for deploying the [HADDOCK portal](http://www.bonvinlab.org/software/haddock2.2/)
 
 ## Requirements
 
-* Basic knowledge of Linux user environment and [Docker container](https://docs.docker.com/engine/reference/commandline/container/) are requested.
-* A working environment with the [EC3 Docker CLI](https://github.com/grycap/ec3#ec3-in-docker-hub) installed. 
-* A valid access token to access the [EGI Cloud infrastructure](https://egi-federated-cloud.readthedocs.io/en/latest/federation.html).
+* Basic knowledge of Linux user environment and [Docker container](https://docs.docker.com/engine/reference/commandline/container/) are requested
+* A working environment with the [EC3 Docker CLI](https://github.com/grycap/ec3#ec3-in-docker-hub) installed 
+* A valid access token to access the [EGI Cloud infrastructure](https://egi-federated-cloud.readthedocs.io/en/latest/federation.html)
 
 
 ## Listing available EC3 templates
@@ -78,8 +78,8 @@ To list the available running clusters, use the command:
 ]$ sudo docker run -v /var/.ec3/clusters:/root/.ec3/clusters grycap/ec3 list
       name          state           IP        nodes 
 ----------------------------------------------------
- haddock-cluster  configured  193.144.46.205    0   
-     cluster      configured  193.144.46.221    0   
+ haddock-cluster  configured  XXX.XXX.XXX.XXX    0   
+     cluster      configured  XXX.XXX.XXX.XXX   0   
 </pre>
 
 ## Authorization file
@@ -90,7 +90,7 @@ Example of cloud provider with OIDC-based authentication:
 
 <pre>
 ]$ cat auth.dat
-id = cesgaostegi; type = OpenStack; host = '<KEYSTONE_EDNPOINT>;' username = egi.eu; tenant = openid; domain = <DOMAIN_NAME>; auth_version = 3.x_oidc_access_token; password = '<OIDC_ACCESS_TOKEN>'
+id = cesgaostegi; type = OpenStack; host = KEYSTONE_EDNPOINT; username = egi.eu; tenant = openid; domain = DOMAIN_NAME; auth_version = 3.x_oidc_access_token; password = OIDC_ACCESS_TOKEN>
 </pre>
 
 ## To create the EC3 cluster
@@ -99,7 +99,7 @@ To launch a cluster, you can use the recipes that you have locally by mounting t
 
 The cluster will be configured with the following templates:
 
-User's templates are stored in $HOME/ec3/templates
+User's templates are stored in: `$HOME/ec3/templates`
 
 <pre>
 ]$ sudo docker run \
@@ -121,6 +121,17 @@ Transferring infrastructure
 Front-end ready!
 </pre>
 
+
+## Access the cluster
+
+To access the cluster, use the command:
+
+<pre>
+]$ sudo docker run -ti -v /var/.ec3/clusters:/root/.ec3/clusters grycap/ec3 ssh cluster_name
+Warning: Permanently added '193.144.46.205' (ECDSA) to the list of known hosts.
+Last login: Sat Jun 20 07:14:36 2020 from 212.189.145.74
+[centos@torqueserver ~]$ 
+</pre>
 
 ## Destroy the cluster
 
