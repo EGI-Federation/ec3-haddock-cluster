@@ -90,16 +90,18 @@ Example of cloud provider with OIDC-based authentication:
 
 <pre>
 ]$ cat auth.dat
-id = cesgaostegi; type = OpenStack; host = KEYSTONE_EDNPOINT; username = egi.eu; tenant = openid; domain = DOMAIN_NAME; auth_version = 3.x_oidc_access_token; password = OIDC_ACCESS_TOKEN>
+id = PROVIDER_ID; type = OpenStack; host = KEYSTONE_ENDPOINT; username = egi.eu; tenant = openid; domain = DOMAIN_NAME; auth_version = 3.x_oidc_access_token; password = OIDC_ACCESS_TOKEN
 </pre>
+
+Where:
+** `id` is the id of the cloud provider (e.g.: cesgatoegi)
+** `host` is the public IP address of the cloud provider Keystone service (e.g.: https://fedcloud-osservices.egi.cesga.es:5000/v3)
+** `domain` is the project tenant in the cloud provider (e.g.: enmr.eu)
+** `password` is the access token
 
 ## To create the EC3 cluster
 
 To launch a cluster, you can use the recipes that you have locally by mounting the folder as a volume, or create your dedicated ones. Also, it is recommendable to maintain the data of active clusters locally, by mounting a volume. In the next example, we are going to deploy a new Torque/Maui cluster in one cloud provider of the EGI Federation. CentOS7 as base OS will be used to configure the front-node and the workers of the EC3 elastic cluster.
-
-The cluster will be configured with the following templates:
-
-User's templates are stored in: `$HOME/ec3/templates`
 
 <pre>
 ]$ sudo docker run \
@@ -121,6 +123,17 @@ Transferring infrastructure
 Front-end ready!
 </pre>
 
+
+## Template used to configure the EC3 cluster for the HADDOCK portal
+
+The cluster will be configured with the following templates:
+** torque (default)
+** centos7-OIDC-CESGA_WeNMR (custom)
+** configure_HADDOCK_cluster (custom)
+** configure_nfs (custom)
+** refreshtoken (default)
+
+User's templates are stored in: `$HOME/ec3/templates`
 
 ## Access the cluster
 
