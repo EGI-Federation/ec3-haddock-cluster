@@ -1,1 +1,0 @@
-id = cesnetostegi; type = OpenStack; host = https://identity.cloud.muni.cz; username = egi.eu; tenant = openid; domain = enmr.eu; auth_version = 3.x_oidc_access_token; password = '<OIDC_TOKEN>'
