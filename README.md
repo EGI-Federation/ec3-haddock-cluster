@@ -70,7 +70,7 @@ To list the available templates, use the command:
         zookeeper         component An open-source server which enables highly reliable distributed coordination  
 </pre>
 
-## Listing running clusters
+## Listing EC3 clusters
 
 To list the available running clusters, use the command:
 
@@ -99,7 +99,11 @@ Where:
 * `domain` is the project tenant in the cloud provider (e.g.: enmr.eu)
 * `password` is the access token
 
-## To create the EC3 cluster
+## Get an Access Token
+Login the EGI AAI Check-In [EGI AAI Check-In](https://aai.egi.eu/fedcloud) service. Copy and paste in your terminal the CURL command to generate a valid access token valid for 1h.
+ 
+
+## Create an elastic EC3 cluster
 
 To launch a cluster, you can use the recipes that you have locally by mounting the folder as a volume, or create your dedicated ones. Also, it is recommendable to maintain the data of active clusters locally, by mounting a volume. In the next example, we are going to deploy a new Torque/Maui cluster in one cloud provider of the EGI Federation. CentOS7 as base OS will be used to configure the front-node and the workers of the EC3 elastic cluster.
 
@@ -135,7 +139,7 @@ The cluster will be configured with the following templates:
 
 User's templates are stored in: `$HOME/ec3/templates`
 
-## Access the cluster
+## Access the EC3 cluster
 
 To access the cluster, use the command:
 
@@ -146,7 +150,7 @@ Last login: Sat Jun 20 07:14:36 2020 from 212.189.145.74
 [centos@torqueserver ~]$ 
 </pre>
 
-## Destroy the cluster
+## Destroy the EC3 cluster
 
 To destroy a running cluster, use the command:
 
