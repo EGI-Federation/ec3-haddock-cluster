@@ -132,10 +132,10 @@ Front-end ready!
 
 The cluster will be configured with the following templates:
 * torque (default)
-* centos7-OIDC-CESGA_WeNMR (custom)
-* configure_HADDOCK_cluster (custom)
-* configure_nfs (custom)
-* refreshtoken (default)
+* [centos7-OIDC-CESGA_WeNMR (custom)](ec3/templates/centos7-OIDC-CESGA_WeNMR.radl)
+* [configure_HADDOCK_cluster (custom)](ec3/templates/configure_HADDOCK_cluster.radl)
+* [configure_nfs (custom)](ec3/templates/configure_nfs.radl)
+* [refreshtoken (default)](ec3/templates/refreshtoken.radl)
 
 User's templates are stored in: `$HOME/ec3/templates`
 
